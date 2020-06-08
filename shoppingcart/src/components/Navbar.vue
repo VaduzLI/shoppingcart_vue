@@ -10,7 +10,7 @@
 
       <v-btn class="ma-2" text small href="/login">Login</v-btn>
       <v-btn text small href="/register">Register</v-btn>
-      <v-btn fab text><v-icon>mdi-cart-outline</v-icon></v-btn>
+      <v-btn href="/cart" fab text><v-icon>mdi-cart-outline</v-icon></v-btn>
     </v-toolbar>
   </div>
 </template>

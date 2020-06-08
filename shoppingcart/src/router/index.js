@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Product from "../views/Product.vue";
 import Item from "../views/Item.vue";
 import Category from "../views/Category.vue";
+import Cart from "../views/Cart.vue";
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: "/shop",
     name: "Category",
     component: Category
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: Cart
   }
 ];
 
