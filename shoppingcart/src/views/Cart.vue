@@ -13,14 +13,30 @@
             <v-list-item v-for="item in cart" :key="item.product.name">
               <v-list-item-content>
                 <v-card>
-                  <v-card-title>{{item.product.name}}</v-card-title>
+                  <v-card-title>{{ item.product.name }}</v-card-title>
                   <v-list-item>
-                    <v-list-item-content>$ {{item.product.price}}</v-list-item-content>
+                    <v-list-item-content
+                      >$ {{ item.product.price }}</v-list-item-content
+                    >
                   </v-list-item>
                   <v-list-item>
-                    <v-btn class="mr-2" fab small dark>-</v-btn>
-                    <span>Qty: {{item.count}}</span>
-                    <v-btn class="ml-2" fab small dark>+</v-btn>
+                    <v-btn
+                      v-on:click="removeItemFromCartQty(item.product)"
+                      class="mr-2"
+                      fab
+                      small
+                      dark
+                      >-</v-btn
+                    >
+                    <span>Qty: {{ item.count }}</span>
+                    <v-btn
+                      v-on:click="addItemToCartQty(item.product)"
+                      class="ml-2"
+                      fab
+                      small
+                      dark
+                      >+</v-btn
+                    >
                   </v-list-item>
                 </v-card>
               </v-list-item-content>
@@ -31,7 +47,7 @@
           <v-card>
             <v-card-title>Total</v-card-title>
             <v-card-text>
-              <span>Total: $ 30</span>
+              <span>Total: $ {{ fullPrice }}</span>
             </v-card-text>
             <v-card-actions>
               <v-btn>purchase</v-btn>
@@ -44,16 +60,35 @@
 </template>
 
 <script>
-let shoppingCart = require('../assets/shoppingcart.js')
+let shoppingCart = require("../assets/shoppingcart.js");
 
 export default {
   data: function() {
     return {
-      cart: null
-    }
+      cart: null,
+      fullPrice: 0
+    };
   },
-  mounted: function () {
+  mounted: function() {
     this.cart = shoppingCart.listCart();
+    this.fullPrice = shoppingCart.totalCart();
+  },
+
+  methods: {
+    addItemToCartQty: function(product) {
+      shoppingCart.addItemToCart(product);
+      this.updateCart();
+    },
+
+    removeItemFromCartQty: function(product) {
+      shoppingCart.removeItemFromCart(product.name);
+      this.updateCart();
+    },
+
+    updateCart: function() {
+      this.cart = shoppingCart.listCart();
+      this.fullPrice = shoppingCart.totalCart();
+    }
   }
-}
+};
 </script>

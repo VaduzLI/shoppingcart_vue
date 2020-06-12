@@ -49,7 +49,8 @@ let shoppingCart = require('../assets/shoppingcart.js')
 export default {
   methods: {
     addToCart: function () {
-      shoppingCart.addItemToCart({name: "stuff", price: 2.20})
+      shoppingCart.addItemToCart({name: "Item_A", price: 2.20})
+      shoppingCart.addItemToCart({name: "Item_B", price: 2.20})
     }
   }
 }

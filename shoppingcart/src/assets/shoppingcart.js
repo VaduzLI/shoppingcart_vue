@@ -34,9 +34,7 @@ let shoppingCart = (function () {
     let obj = {}
 
     obj.addItemToCart = function (product) {
-        console.log(product)
         for (let item in cart) {
-            console.log(cart[item])
             if (cart[item].product.name === product.name) {
                 cart[item].count++;
                 saveCart()
@@ -96,7 +94,7 @@ let shoppingCart = (function () {
     obj.totalCart = function () {
         var totalCart = 0;
         for (var item in cart) {
-            totalCart += cart[item].price * cart[item].count;
+            totalCart += cart[item].product.price * cart[item].count;
         }
         return Number(totalCart.toFixed(2));
     }
