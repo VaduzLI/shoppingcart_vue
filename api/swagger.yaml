@@ -1,0 +1,217 @@
+openapi: 3.0.0
+info:
+  title: School Cart Api
+  version: 0.0.1
+  description: This is the cart project
+  contact:
+    email: wouter.v.d.waal@gmail.com
+    name: Wouter van der Waal
+servers:
+  - url: "http://localhost:5000/api"
+    description: Local testing server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /orders:
+    get:
+      tags:
+        - Order
+      description: Get orders
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id:
+                    type: number
+                  customer_id:
+                    type: number
+                  address_id:
+                    type: number
+                  order_payment_type:
+                    type: string
+                  order_date:
+                    type: string
+                  order_status:
+                    type: string
+                  order_total:
+                    type: number
+        '403':
+          description: Wrong key to see this order page
+      security:
+        - bearerAuth: []
+  /category:
+    get:
+      tags:
+        - Category
+      description: Get all categories
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category_id:
+                    type: number
+                  category_name:
+                    type: string
+                  category_description:
+                    type: string
+                  category_image:
+                    type: string
+  /address:
+    post:
+      tags:
+        - Address
+      description: Create new Address
+      responses:
+        "200":
+          description: OK
+  /customer:
+    post:
+      tags:
+        - User
+      description: Create new customer
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Not OK
+  /purchase:
+    post:
+      tags:
+        - Cart
+      description: Make purchase
+      responses:
+        "200":
+          description: purchase made
+        "500":
+          description: purchase failed
+
+  /register:
+    post:
+      tags:
+        - User
+      description: Register new user
+      responses:
+        "200":
+          description: User registerd
+          content:
+            application/json:
+              schema:
+                  type: object 
+                  properties:
+                    message:
+                      type: string
+        "500":
+          description: Server error
+  /products/{category_id}:
+    get:
+      tags:
+        - Product
+      description: Get all products from single category
+      parameters:
+        - name: category_id
+          in: path
+          description: the category id
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product_id:
+                    type: number
+                  category_id:
+                    type: number
+                  product_name:
+                    type: string
+                  product_description:
+                    type: string
+                  product_price:
+                    type: number
+  /products:
+    get:
+      tags:
+        - Product
+      description: Get all products
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product_id:
+                    type: number
+                  category_id:
+                    type: number
+                  product_name:
+                    type: string
+                  product_description:
+                    type: string
+                  product_price:
+                    type: number
+        "403":
+          description: No auth
+  /login:
+    post:
+      tags:
+        - User
+      summary: Login for a JWT token
+      description:
+        Login with a username and password and the server will return a JWT
+        token with a 24 hour expire date
+      operationId: loginPOST
+      parameters:
+        - name: Username
+          in: header
+          description: Username of user
+          required: false
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: Password
+          in: header
+          description: Password of user
+          required: false
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Gives a JWT token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        "401":
+          description: Cridentails dont overlap with the ones stored in the database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
