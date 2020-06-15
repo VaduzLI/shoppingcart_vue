@@ -17,6 +17,36 @@ components:
       scheme: bearer
       bearerFormat: JWT
 paths:
+  /category/{category_id}:
+    get:
+      description: get single category
+      parameters:
+        - name: category_id
+          in: path
+          description: category_id
+          required: true
+          schema:
+            type: string
+      tags:
+        - Category
+      responses:
+        '200':
+          description: OK
+  /products/product/{product_id}:
+    get:
+      tags:
+        - Product
+      description: get single product
+      parameters:
+        - name: product_id
+          in: path
+          description: product_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
   /orders:
     get:
       tags:
@@ -115,7 +145,7 @@ paths:
                       type: string
         "500":
           description: Server error
-  /products/{category_id}:
+  /products/category/{category_id}:
     get:
       tags:
         - Product
