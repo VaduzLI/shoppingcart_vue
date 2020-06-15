@@ -16,14 +16,14 @@ let shoppingCart = (function () {
     };
 
     function saveCart() {
-        sessionStorage.setItem('shoppingCart', JSON.stringify(cart))
+        localStorage.setItem('shoppingCart', JSON.stringify(cart))
     }
 
     function loadCart() {
-        cart = JSON.parse(sessionStorage.getItem('shoppingCart'));
+        cart = JSON.parse(localStorage.getItem('shoppingCart'));
     }
 
-    if (sessionStorage.getItem("shoppingCart") != null) {
+    if (localStorage.getItem("shoppingCart") != null) {
         loadCart();
     }
 
