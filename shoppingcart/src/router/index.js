@@ -5,6 +5,9 @@ import Product from "../views/Product.vue";
 import Item from "../views/Item.vue";
 import Category from "../views/Category.vue";
 import Cart from "../views/Cart.vue";
+import Purchase from "../views/Purchase.vue";
+import Register from "../views/Register.vue";
+import Login from "../views/Login.vue";
 
 Vue.use(VueRouter);
 
@@ -20,7 +23,7 @@ const routes = [
     component: Product
   },
   {
-    path: "/shop/:category",
+    path: "/shop/category/:id",
     name: "Item",
     component: Item
   },
@@ -33,6 +36,21 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: Cart
+  },
+  {
+    path: "/cart/purchase",
+    name: "Purchase",
+    component: Purchase
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register
   }
 ];
 
