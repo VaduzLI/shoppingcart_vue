@@ -2,14 +2,16 @@
   <v-content>
     <v-container>
       <v-row>
-        <v-col cols="6">
+        <v-col v-for="product in products" :key="product.product_id" cols="6">
           <v-card>
             <v-list-item>
               <v-list-item-content>
-                <v-list-item-title class="headline"
-                  >Some Product</v-list-item-title
-                >
-                <v-list-item-subtitle>Category</v-list-item-subtitle>
+                <v-list-item-title class="headline">{{
+                  product.product_name
+                }}</v-list-item-title>
+                <v-list-item-subtitle>{{
+                  product.category_id
+                }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-img
@@ -18,21 +20,31 @@
             >
             </v-img>
             <v-card-text>
-              Some product information
+              {{ product.product_description }}
             </v-card-text>
             <v-card-actions>
-              <v-btn text color="deep-purple accent-4" href="/shop/product/123">
+              <v-btn
+                text
+                color="deep-purple accent-4"
+                :href="'/shop/product/' + product.product_id"
+              >
                 More Info
               </v-btn>
 
-              <v-btn v-on:click="addToCart" text color="deep-purple accent-4">
+              <v-btn
+                v-on:click="
+                  addToCart({
+                    name: product.product_name,
+                    price: product.product_price
+                  })
+                "
+                text
+                color="deep-purple accent-4"
+              >
                 Add Cart
               </v-btn>
             </v-card-actions>
           </v-card>
-        </v-col>
-        <v-col cols="6">
-          <span>yeet</span>
         </v-col>
       </v-row>
     </v-container>
@@ -42,15 +54,27 @@
 <script>
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
+import axios from 'axios';
 
 let shoppingCart = require('../assets/shoppingcart.js')
 
 
 export default {
+  data: function(){
+    return {
+      products: null
+    }
+  },
+
+  mounted: function() {
+    axios.get(`http://localhost:5000/api/products/category/${this.$router.currentRoute.params.id}`).then(res => {
+      this.products = res.data
+    })
+  },
+
   methods: {
-    addToCart: function () {
-      shoppingCart.addItemToCart({name: "Item_A", price: 2.20})
-      shoppingCart.addItemToCart({name: "Item_B", price: 2.20})
+    addToCart: function (product) {
+      shoppingCart.addItemToCart(product)
     }
   }
 }
