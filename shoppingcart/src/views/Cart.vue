@@ -10,6 +10,7 @@
               </v-list-item-content>
             </v-list-item>
             <v-divider></v-divider>
+            <v-card-title v-if="cart.length == 0">Cart is empty</v-card-title>
             <v-list-item v-for="item in cart" :key="item.product.name">
               <v-list-item-content>
                 <v-card>
