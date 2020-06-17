@@ -47,11 +47,19 @@ paths:
       responses:
         '200':
           description: OK
-  /orders:
+  /orders/{user_id}:
     get:
       tags:
         - Order
       description: Get orders
+      parameters:
+        - name: user_id
+          in: path
+          description: get orders
+          required: true
+          schema:
+            type: string
+        
       responses:
         '200':
           description: OK
@@ -104,6 +112,21 @@ paths:
       tags:
         - Address
       description: Create new Address
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                streetname:
+                  type: string
+                housenumber:
+                  type: string
+                country:
+                  type: string
+                postcode:
+                  type: string      
       responses:
         "200":
           description: OK
@@ -112,16 +135,65 @@ paths:
       tags:
         - User
       description: Create new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                phone:
+                  type: string
+                firstname:
+                  type: string
+                lastname:
+                  type: string      
       responses:
         "200":
           description: OK
         "500":
           description: Not OK
+  /user:
+    get:
+      tags:
+        - User
+      description: Get current user
+      responses:
+        "200":
+          description: user data
+        "403":
+          description: Nope
+      security:
+        - bearerAuth: []
   /purchase:
     post:
       tags:
         - Cart
       description: Make purchase
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                products:
+                  type: object
+                customer_id:
+                  type: number
+                address_id:
+                  type: number
+                payment_type:
+                  type: string
+                date:
+                  type: string
+                status:
+                  type: string
+                total:
+                  type: number
+
       responses:
         "200":
           description: purchase made
@@ -133,6 +205,25 @@ paths:
       tags:
         - User
       description: Register new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                firstname:
+                  type: string
+                lastname:
+                  type: string
       responses:
         "200":
           description: User registerd
@@ -206,8 +297,7 @@ paths:
         - User
       summary: Login for a JWT token
       description:
-        Login with a username and password and the server will return a JWT
-        token with a 24 hour expire date
+        Login with a username and password and the server will return a JWT token with a 24 hour expire date
       operationId: loginPOST
       parameters:
         - name: Username

@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols="8">
-          <v-card>
+          <v-card v-if="!isFetching">
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title class="headline">My Cart</v-list-item-title>
@@ -66,6 +66,7 @@ let shoppingCart = require("../assets/shoppingcart.js");
 export default {
   data: function() {
     return {
+      isFetching: true,
       cart: null,
       fullPrice: 0
     };
@@ -73,6 +74,7 @@ export default {
   mounted: function() {
     this.cart = shoppingCart.listCart();
     this.fullPrice = shoppingCart.totalCart();
+    this.isFetching = false;
   },
 
   methods: {

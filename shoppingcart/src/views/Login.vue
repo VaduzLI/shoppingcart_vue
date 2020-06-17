@@ -18,6 +18,7 @@
           <v-card-text>
             <v-form>
               <v-text-field
+                v-model="form.username"
                 label="Username"
                 name="username"
                 prepend-icon="mdi-account"
@@ -26,6 +27,7 @@
                 hide-details="auto"
               ></v-text-field>
               <v-text-field
+                v-model="form.password"
                 id="password"
                 label="Password"
                 name="password"
@@ -52,7 +54,12 @@ export default {
     rules: [
       value => !!value || "Required.",
       value => (value && value.length >= 3) || "Min 3 characters"
-    ]
+    ],
+
+    form: {
+      username: "",
+      password: ""
+    }
   })
 };
 </script>

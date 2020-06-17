@@ -1,0 +1,5 @@
+{
+    "ignore": ["test/*", "docs/*"],
+    "watch": ["config/.env", "*.js", "*.json", "*.yaml", "*.yml"],
+    "ext": "js,json,yaml,yml"
+}
