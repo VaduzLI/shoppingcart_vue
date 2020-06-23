@@ -26,11 +26,11 @@ module.exports.PostRegister = (userData) => {
     });
 }
 
-module.exports.PostRegister = (userData) => {
+module.exports.PostLogin = (userData) => {
     return new Promise(function(resolve, reject) {
         mysql.getConnection(function(err, sqlclient) {
-            sqlclient.query(`SELECT * FROM products`, function(err, results, fields) {
-                resolve(results)
+            sqlclient.query(`SELECT * FROM logins WHERE login_username = "${userData.username}"`, function(err, results, fields) {
+                resolve(results[0])
             })
         })
     });

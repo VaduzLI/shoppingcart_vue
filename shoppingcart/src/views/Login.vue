@@ -40,7 +40,14 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary">Login</v-btn>
+            <v-btn
+              v-on:click="login"
+              @click="loader = 'loading'"
+              :loading="loading"
+              :disabled="loading"
+              color="primary"
+              >Login</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-col>
@@ -49,17 +56,38 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data: () => ({
     rules: [
       value => !!value || "Required.",
       value => (value && value.length >= 3) || "Min 3 characters"
     ],
-
     form: {
       username: "",
       password: ""
+    },
+    loading: false
+  }),
+
+  methods: {
+    login: function() {
+      const self = this;
+      axios
+        .post("http://localhost:5000/api/login", {
+          username: self.form.username,
+          password: self.form.password
+        })
+        .then(function(response) {
+          self.loading = false;
+          localStorage.token = response.token;
+          console.log(response);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     }
-  })
+  }
 };
 </script>
