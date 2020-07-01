@@ -40,3 +40,13 @@ module.exports.PostLogin = (userData) => {
         }
     })
 }
+
+module.exports.GetOrders = async (userData) => {
+    try {
+        let data = userDatabase.GetOrders(userData)
+        // let data = userData;
+        return data
+    } catch(err) {
+        throw new Error(err.message)
+    } 
+}

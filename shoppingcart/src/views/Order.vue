@@ -2,18 +2,12 @@
   <v-content>
     <v-container>
       <v-row align="center" justify="center">
-        <v-col cols="6">
+        <v-col v-for="(order, index) in orders" :key="order.order_id" cols="7">
           <v-card>
-            <v-card-title>Order number: 43</v-card-title>
+            <v-card-title>Order number: {{ order.order_id }}</v-card-title>
             <v-card-text>
               <v-divider></v-divider>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>Productname</v-list-item-title>
-                  <v-list-item-title>Count: 2</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
+              <v-list-item v-for="item in list[index]" :key="item.order_items_id">
                 <v-list-item-content>
                   <v-list-item-title>Productname</v-list-item-title>
                   <v-list-item-title>Count: 2</v-list-item-title>
@@ -22,7 +16,9 @@
               <v-divider></v-divider>
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title>Total: $203</v-list-item-title>
+                  <v-list-item-title
+                    >Total: ${{ order.order_total }}</v-list-item-title
+                  >
                 </v-list-item-content>
               </v-list-item>
             </v-card-text>
@@ -34,7 +30,39 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  
-}
+  data: function() {
+    return {
+      orders: [],
+      child: [],
+      list: []
+    };
+  },
+
+  mounted: function() {
+    const self = this;
+    axios
+      .get("http://localhost:5000/api/orders", {
+        headers: {
+          Authorization: "Bearer " + localStorage.token
+        }
+      })
+      .then(function(response) {
+        console.log(response);
+        self.orders = response.data.orders;
+        self.child = response.data.child;
+
+        for (let item in self.orders) {
+          var filArray = self.child.filter(obj => obj.order_id == self.orders[item].order_id).map( obj => obj );
+          self.list.push(filArray)
+        }
+      })
+      .catch(function(err) {
+        console.log(err.response);
+        console.log(err);
+      });
+  }
+};
 </script>

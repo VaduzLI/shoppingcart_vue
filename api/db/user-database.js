@@ -39,9 +39,18 @@ module.exports.PostLogin = (userData) => {
 module.exports.GetOrders = (userData) => {
     return new Promise(function(resolve, reject) {
         mysql.getConnection(function(err, sqlclient) {
+            sqlclient.query(`
+            SELECT * FROM orders WHERE customer_id = "${userData.sub}";
+            `, function(err, results, fields) {
+                let dataArray = results
+                sqlclient.query(`SELECT * FROM order_items WHERE order_id IN (SELECT order_id FROM orders WHERE customer_id = ${userData.sub})
+                `, function(err, results, fields) {
+                    resolve({orders: dataArray, child: results})
+                })
 
-            sqlclient.query(`SELECT * FROM orders WHERE login_username = "${userData.username}"`, function(err, results, fields) {
-                resolve(results[0])
+
+
+                // resolve(dataArray)
             })
         })
     });
