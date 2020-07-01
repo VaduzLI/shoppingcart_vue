@@ -172,12 +172,11 @@ export default {
         })
         .then(function(response) {
           if (response.data.success) {
-            self.$router.push("http://localhost:8080/login");
+            self.$router.push("/login");
           } else {
             self.loading = false;
           }
         })
-
         .catch(function() {
           self.loading = false;
         });

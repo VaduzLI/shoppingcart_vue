@@ -35,3 +35,14 @@ module.exports.PostLogin = (userData) => {
         })
     });
 }
+
+module.exports.GetOrders = (userData) => {
+    return new Promise(function(resolve, reject) {
+        mysql.getConnection(function(err, sqlclient) {
+
+            sqlclient.query(`SELECT * FROM orders WHERE login_username = "${userData.username}"`, function(err, results, fields) {
+                resolve(results[0])
+            })
+        })
+    });
+}

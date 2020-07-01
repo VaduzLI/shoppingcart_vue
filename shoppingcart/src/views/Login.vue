@@ -81,8 +81,9 @@ export default {
         })
         .then(function(response) {
           self.loading = false;
-          localStorage.token = response.token;
-          console.log(response);
+          localStorage.token = response.data.token;
+          self.$store.commit("tokenInLocal");
+          self.$router.push("/");
         })
         .catch(function(err) {
           console.log(err);

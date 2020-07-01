@@ -29,9 +29,7 @@ module.exports.PostLogin = (userData) => {
                 let signData = {};
                 signData.sub = String(checkUsername.login_id);
                 signData.name = checkUsername.login_username;
-                console.log(signData);
-                let token = jwt.sign(signData, 'mycoolkey', { expiresIn: '1h'})
-                console.log(token)
+                let token = jwt.sign(signData, 'secretkey', { expiresIn: '1h'})
                 resolve({token}) 
             }
             catch(err) {

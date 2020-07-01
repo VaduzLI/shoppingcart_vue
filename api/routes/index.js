@@ -28,9 +28,10 @@ router.get("/products", productController.getAllProducts)
 // router.get("/user", userController)
 router.post("/register", userController.PostRegister)
 router.post("/login", userController.PostLogin)
+router.get("/orders", verifyToken, userController.GetOrders)
 
 // Cart
-// router.post("/purchase", cartController)
+router.post("/purchase", cartController.PostPurchase)
 
 //Groups
 // router.get('/groups', verifyToken, groupcontroller.AllGroups)

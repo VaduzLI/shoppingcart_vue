@@ -1,11 +1,20 @@
 'use strict';
 
-const {  } = require('../db')
+const cartDatabase = require('../db/cart-database')
 
 
-module.exports.Null = async () => {
+module.exports.PostPurchaseNoAuth = async (body) => {
     try {
-        let data = await Null()
+        let data = cartDatabase.PostPurchaseNoAuth(body)
+        return data
+    } catch(err) {
+        throw new Error(err.message)
+    } 
+}
+
+module.exports.PostPurchaseAuth = async (auth, body) => {
+    try {
+        let data = cartDatabase.PostPurchaseAuth(auth, body)
         return data
     } catch(err) {
         throw new Error(err.message)

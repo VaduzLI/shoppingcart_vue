@@ -51,16 +51,36 @@
               <span>Total: $ {{ fullPrice }}</span>
             </v-card-text>
             <v-card-actions>
-              <v-btn>purchase</v-btn>
+              <v-btn
+                v-if="!token"
+                :disabled="!cartHasItems"
+                href="/cart/purchase"
+                >Purchase(no Auth)</v-btn
+              >
+              <v-btn v-else v-on:click="Purchase" :disabled="!cartHasItems"
+                >Purchase(Auth)</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
+      <div class="text-center">
+        <v-snackbar v-model="snackbar" :timeout="timeout">
+          {{ text }}
+
+          <template v-slot:action="{ attrs }">
+            <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
+      </div>
     </v-container>
   </v-content>
 </template>
 
 <script>
+import axios from "axios";
 let shoppingCart = require("../assets/shoppingcart.js");
 
 export default {
@@ -68,13 +88,33 @@ export default {
     return {
       isFetching: true,
       cart: null,
-      fullPrice: 0
+      fullPrice: 0,
+      cartHasItems: false,
+      snackbar: false,
+      text: "Server Error",
+      timeout: 3500
     };
   },
   mounted: function() {
     this.cart = shoppingCart.listCart();
     this.fullPrice = shoppingCart.totalCart();
     this.isFetching = false;
+  },
+
+  watch: {
+    cart: function() {
+      if (!this.cart.length == 0 || !this.cart == null) {
+        this.cartHasItems = true;
+      } else {
+        this.cartHasItems = false;
+      }
+    }
+  },
+
+  computed: {
+    token() {
+      return this.$store.state.hasToken;
+    }
   },
 
   methods: {
@@ -91,6 +131,34 @@ export default {
     updateCart: function() {
       this.cart = shoppingCart.listCart();
       this.fullPrice = shoppingCart.totalCart();
+    },
+
+    Purchase: function() {
+      const self = this;
+      axios
+        .post(
+          "http://localhost:5000/api/purchase",
+          {
+            token: localStorage.token,
+            loggedIn: this.token,
+            cart: localStorage.shoppingCart,
+            total: shoppingCart.totalCart()
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.token
+            }
+          }
+        )
+        .then(function(response) {
+          console.log(response);
+          shoppingCart.clearCart();
+          self.$router.push("/thankyou");
+        })
+        .catch(function(err) {
+          self.snackbar = true;
+          self.text = `Error: ${err.response.data.errorCode}, ${err.response.data.errorMessage}`;
+        });
     }
   }
 };

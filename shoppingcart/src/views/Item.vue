@@ -34,6 +34,7 @@
               <v-btn
                 v-on:click="
                   addToCart({
+                    id: product.product_id,
                     name: product.product_name,
                     price: product.product_price
                   })
