@@ -21,22 +21,23 @@ module.exports.PostLogin = (userData) => {
         let checkUsername = await userDatabase.PostLogin(userData)
         if(checkUsername == undefined) {
             resolve({error: "Incorrect cridentials", message: "Username is incorrect", code: 401})
-        }
-        let checkPassword = await bcrypt.compare(userData.password, checkUsername.login_password);
-
-        if(checkPassword) {
-            try {
-                let signData = {};
-                signData.sub = String(checkUsername.login_id);
-                signData.name = checkUsername.login_username;
-                let token = jwt.sign(signData, 'secretkey', { expiresIn: '1h'})
-                resolve({token}) 
-            }
-            catch(err) {
-                reject(new Error(err))
-            }
         } else {
-            resolve({error: "Incorrect cridentials", message: "Password is incorrect", code: 401})
+            let checkPassword = await bcrypt.compare(userData.password, checkUsername.login_password);
+
+            if(checkPassword) {
+                try {
+                    let signData = {};
+                    signData.sub = String(checkUsername.login_id);
+                    signData.name = checkUsername.login_username;
+                    let token = jwt.sign(signData, 'secretkey', { expiresIn: '1h'})
+                    resolve({token}) 
+                }
+                catch(err) {
+                    resolve({error: "Incorrect cridentials", message: "Password is incorrect", code: 401})
+                }
+            } else {
+                resolve({error: "Incorrect cridentials", message: "Password is incorrect", code: 401})
+            }
         }
     })
 }

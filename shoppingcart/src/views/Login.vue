@@ -52,6 +52,17 @@
         </v-card>
       </v-col>
     </v-row>
+    <div class="text-center">
+      <v-snackbar v-model="snackbar" :timeout="timeout">
+        {{ text }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </div>
   </v-container>
 </template>
 
@@ -68,7 +79,10 @@ export default {
       username: "",
       password: ""
     },
-    loading: false
+    loading: false,
+    snackbar: false,
+    text: "Server Error",
+    timeout: 3500
   }),
 
   methods: {
@@ -80,10 +94,18 @@ export default {
           password: self.form.password
         })
         .then(function(response) {
-          self.loading = false;
-          localStorage.token = response.data.token;
-          self.$store.commit("tokenInLocal");
-          self.$router.push("/");
+          if(response.data.error) {
+            self.snackbar = true;
+            self.text = `Error: ${response.data.code}, ${response.data.message}`;
+            self.form.password = "";
+            self.loading = false;
+          } else {
+            self.loading = false;
+            localStorage.token = response.data.token;
+            self.$store.commit("tokenInLocal");
+            self.$router.push("/");
+          }
+
         })
         .catch(function(err) {
           console.log(err);
