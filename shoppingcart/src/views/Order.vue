@@ -9,7 +9,7 @@
               <v-divider></v-divider>
               <v-list-item v-for="item in list[index]" :key="item.order_items_id">
                 <v-list-item-content>
-                  <v-list-item-title>Productname</v-list-item-title>
+                  <v-list-item-title> Product ID: {{item.product_id}} </v-list-item-title>
                   <v-list-item-title>Count: 2</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
