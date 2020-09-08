@@ -171,7 +171,7 @@ export default {
           postcode: this.form.postcode
         })
         .then(function(response) {
-          if (response.data.success) {
+          if (response.status == 200) {
             self.$router.push("/login");
           } else {
             self.loading = false;
