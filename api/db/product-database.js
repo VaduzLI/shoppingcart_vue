@@ -8,6 +8,7 @@ module.exports.GetProductByProductId = (productId) => {
             sqlclient.query(`SELECT * FROM products WHERE product_id = ${productId}`, function(err, results, fields) {
                 resolve(results[0])
             })
+            sqlclient.release()
         })
     });
 }
@@ -18,6 +19,7 @@ module.exports.GetProductByCategoryId = (categoryId) => {
             sqlclient.query(`SELECT * FROM products WHERE category_id = ${categoryId}`, function(err, results, fields) {
                 resolve(results)
             })
+            sqlclient.release()
         })
     });
 }
@@ -28,6 +30,7 @@ module.exports.getAllProducts = () => {
             sqlclient.query(`SELECT * FROM products`, function(err, results, fields) {
                 resolve(results)
             })
+            sqlclient.release()
         })
     });
 }

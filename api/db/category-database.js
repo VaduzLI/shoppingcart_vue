@@ -8,6 +8,7 @@ module.exports.GetAllCategories = () => {
             sqlclient.query(`SELECT * FROM categories`, function(err, results, fields) {
                 resolve(results)
             })
+            sqlclient.release()
         })
     });
 }
@@ -18,6 +19,7 @@ module.exports.GetCategoryByCategoryId = (categoryId) => {
             sqlclient.query(`SELECT * FROM categories WHERE category_id = ${categoryId}`, function(err, results, fields) {
                 resolve(results[0])
             })
+            sqlclient.release()
         })
     });
 }

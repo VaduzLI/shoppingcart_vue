@@ -30,6 +30,7 @@ module.exports.PostPurchaseNoAuth = (userData) => {
                         }
                         resolve({message: 'Money well spend', success: true})
                     })
+                    sqlclient.release()
                 })
             })
         })
@@ -52,6 +53,7 @@ module.exports.PostPurchaseAuth = (auth, userData) => {
                 }
                 resolve({message: 'Money well spend', success: true})
             })
+            sqlclient.release()
         })
     });
 }

@@ -19,6 +19,7 @@ module.exports.PostRegister = (userData) => {
                     `, function(err, results, fields) {
                         resolve({message: 'User Registerd', success: true})
                     })
+                    sqlclient.release()
                 })
                 
             })
@@ -32,6 +33,7 @@ module.exports.PostLogin = (userData) => {
             sqlclient.query(`SELECT * FROM logins WHERE login_username = "${userData.username}"`, function(err, results, fields) {
                 resolve(results[0])
             })
+            sqlclient.release()
         })
     });
 }
@@ -49,7 +51,7 @@ module.exports.GetOrders = (userData) => {
                 })
 
 
-
+                sqlclient.release()
                 // resolve(dataArray)
             })
         })
