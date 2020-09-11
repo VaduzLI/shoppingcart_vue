@@ -55,7 +55,7 @@ export default {
   },
 
   mounted: function() {
-    // returns array trash
+    // get product by id
     axios
       .get(
         `http://localhost:5000/api/products/product/${this.$router.currentRoute.params.id}`
@@ -67,6 +67,7 @@ export default {
   },
 
   methods: {
+    // Add product to cart
     addToCart: function(product) {
       shoppingCart.addItemToCart(product);
     }

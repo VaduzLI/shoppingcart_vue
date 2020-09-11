@@ -43,6 +43,7 @@ export default {
 
   mounted: function() {
     const self = this;
+    // Get orders from the client based on token
     axios
       .get("http://localhost:5000/api/orders", {
         headers: {
@@ -50,10 +51,11 @@ export default {
         }
       })
       .then(function(response) {
-        console.log(response);
+        // Get the orders and the items of those orders
         self.orders = response.data.orders;
         self.child = response.data.child;
 
+        // Filter and map the orders
         for (let item in self.orders) {
           var filArray = self.child.filter(obj => obj.order_id == self.orders[item].order_id).map( obj => obj );
           self.list.push(filArray)

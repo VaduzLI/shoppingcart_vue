@@ -114,14 +114,14 @@ export default {
     ],
     ruleShort: [value => !!value || "Required."],
     form: {
-      email: "email@email.com",
-      phone: "061234567",
-      firstname: "first",
-      lastname: "last",
-      streetname: "name",
-      housenumber: "13",
-      country: "germany",
-      postcode: "1234 AB",
+      email: "",
+      phone: "",
+      firstname: "",
+      lastname: "",
+      streetname: "",
+      housenumber: "",
+      country: "",
+      postcode: "",
       loggedIn: localStorage.token || false,
       cart: localStorage.shoppingCart
     },
@@ -129,6 +129,7 @@ export default {
   }),
 
   methods: {
+    // Post user data and if login and cart items to back-end for processing
     purchase: function() {
       const self = this;
       axios
@@ -145,9 +146,11 @@ export default {
           cart: this.form.cart,
           total: shoppingCart.totalCart()
         })
+        // if true send to thankyou
         .then(function(response) {
           console.log(response);
           if (response.data.success) {
+            // Clear cart
             shoppingCart.clearCart();
             self.$router.push("/thankyou");
           } else {

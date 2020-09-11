@@ -157,6 +157,7 @@ export default {
   methods: {
     register: function() {
       const self = this;
+      // Post user input for creating a acount
       axios
         .post("http://localhost:5000/api/register", {
           username: this.form.username,

@@ -71,6 +71,7 @@ import axios from "axios";
 
 export default {
   data: () => ({
+    // Validation rules for inputs
     rules: [
       value => !!value || "Required.",
       value => (value && value.length >= 3) || "Min 3 characters"
@@ -86,6 +87,7 @@ export default {
   }),
 
   methods: {
+    // Post a login, if true give client a token, if false send error
     login: function() {
       const self = this;
       axios
@@ -95,11 +97,13 @@ export default {
         })
         .then(function(response) {
           if(response.data.error) {
+            // show a snackbar with the login error
             self.snackbar = true;
             self.text = `Error: ${response.data.code}, ${response.data.message}`;
             self.form.password = "";
             self.loading = false;
           } else {
+            // store token in localstorage and send to home
             self.loading = false;
             localStorage.token = response.data.token;
             self.$store.commit("tokenInLocal");
@@ -107,6 +111,7 @@ export default {
           }
 
         })
+        // if server error, log error
         .catch(function(err) {
           console.log(err);
         });

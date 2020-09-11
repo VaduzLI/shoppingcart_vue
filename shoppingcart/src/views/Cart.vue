@@ -96,12 +96,15 @@ export default {
     };
   },
   mounted: function() {
+    // Get cart and prices
     this.cart = shoppingCart.listCart();
     this.fullPrice = shoppingCart.totalCart();
+    // stop loading animation
     this.isFetching = false;
   },
 
   watch: {
+    // Watch if item in cart is 0, if so remove it
     cart: function() {
       if (!this.cart.length == 0 || !this.cart == null) {
         this.cartHasItems = true;
@@ -112,27 +115,29 @@ export default {
   },
 
   computed: {
+    // Check if client has token (VueX)
     token() {
       return this.$store.state.hasToken;
     }
   },
 
   methods: {
+    // Add item to cart by press '+' button
     addItemToCartQty: function(product) {
       shoppingCart.addItemToCart(product);
       this.updateCart();
     },
-
+    // Remove item from cart by press '-' button
     removeItemFromCartQty: function(product) {
       shoppingCart.removeItemFromCart(product.name);
       this.updateCart();
     },
-
+    // Update cart with changes in items and update prices
     updateCart: function() {
       this.cart = shoppingCart.listCart();
       this.fullPrice = shoppingCart.totalCart();
     },
-
+    // Post token and if login and cart and total for backend processing
     Purchase: function() {
       const self = this;
       axios

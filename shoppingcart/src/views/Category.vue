@@ -54,7 +54,7 @@ export default {
       categories: null
     };
   },
-
+  // Get all product categories from the back-end
   mounted: function() {
     axios.get("http://localhost:5000/api/category").then(res => {
       this.categories = res.data;

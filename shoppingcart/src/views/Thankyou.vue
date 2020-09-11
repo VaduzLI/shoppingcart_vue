@@ -20,6 +20,7 @@
 <script>
 export default {
   computed: {
+    // Check if client has token (VueX)
     token() {
       return this.$store.state.hasToken;
     }
