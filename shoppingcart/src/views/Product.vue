@@ -58,7 +58,7 @@ export default {
     // get product by id
     axios
       .get(
-        `http://localhost:5000/api/products/product/${this.$router.currentRoute.params.id}`
+        `${this.$store.state.currentApiUrl}/api/products/product/${this.$router.currentRoute.params.id}`
       )
       .then(res => {
         this.product = res.data;

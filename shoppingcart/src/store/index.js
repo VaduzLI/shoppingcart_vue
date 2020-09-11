@@ -17,6 +17,7 @@ export default new Vuex.Store({
     })
   ],
   state: {
+    currentApiUrl: "http://localhost:5000",
     hasToken: localStorage.token
   },
   mutations: {

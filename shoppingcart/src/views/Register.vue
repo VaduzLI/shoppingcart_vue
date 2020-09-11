@@ -159,7 +159,7 @@ export default {
       const self = this;
       // Post user input for creating a acount
       axios
-        .post("http://localhost:5000/api/register", {
+        .post(`${this.$store.state.currentApiUrl}/api/register`, {
           username: this.form.username,
           password: this.form.password,
           email: this.form.email,

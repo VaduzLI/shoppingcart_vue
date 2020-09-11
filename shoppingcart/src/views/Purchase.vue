@@ -133,7 +133,7 @@ export default {
     purchase: function() {
       const self = this;
       axios
-        .post("http://localhost:5000/api/purchase", {
+        .post(`${this.$store.state.currentApiUrl}/api/purchase`, {
           email: this.form.email,
           phone: this.form.phone,
           firstname: this.form.firstname,

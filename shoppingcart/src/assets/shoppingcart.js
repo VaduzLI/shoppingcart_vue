@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
-// Classes in js are more for instances, its either a js function or a typescript port.
-// https://codepen.io/Dimasion/pen/oBoqBM
 
 let shoppingCart = (function () {
     /* 

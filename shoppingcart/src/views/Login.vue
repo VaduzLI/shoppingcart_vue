@@ -91,7 +91,7 @@ export default {
     login: function() {
       const self = this;
       axios
-        .post("http://localhost:5000/api/login", {
+        .post(`${this.$store.state.currentApiUrl}/api/login`, {
           username: self.form.username,
           password: self.form.password
         })

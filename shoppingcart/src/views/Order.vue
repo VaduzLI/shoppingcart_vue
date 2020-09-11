@@ -45,7 +45,7 @@ export default {
     const self = this;
     // Get orders from the client based on token
     axios
-      .get("http://localhost:5000/api/orders", {
+      .get(`${this.$store.state.currentApiUrl}/api/orders`, {
         headers: {
           Authorization: "Bearer " + localStorage.token
         }

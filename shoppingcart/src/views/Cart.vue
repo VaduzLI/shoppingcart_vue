@@ -142,7 +142,7 @@ export default {
       const self = this;
       axios
         .post(
-          "http://localhost:5000/api/purchase",
+          `${this.$store.state.currentApiUrl}/api/purchase`,
           {
             token: localStorage.token,
             loggedIn: this.token,

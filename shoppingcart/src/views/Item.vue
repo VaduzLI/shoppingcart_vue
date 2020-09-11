@@ -69,7 +69,7 @@ export default {
 
   mounted: function() {
     // Gets all products belonging to that category
-    axios.get(`http://localhost:5000/api/products/category/${this.$router.currentRoute.params.id}`).then(res => {
+    axios.get(`${this.$store.state.currentApiUrl}/api/products/category/${this.$router.currentRoute.params.id}`).then(res => {
       this.products = res.data
     })
   },
