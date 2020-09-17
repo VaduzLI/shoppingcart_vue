@@ -46,3 +46,10 @@ npm run serve
 ```
 
 the project is now ready for use
+
+visit
+```
+localhost:8080
+```
+
+for the shoppingcart application
