@@ -15,6 +15,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-btn
+                  color="primary"
                   v-on:click="
                     addToCart({
                       id: product.product_id,
@@ -38,15 +39,20 @@
           </v-card>
         </v-col>
       </v-row>
+      <AddOrderSnackbar />
     </v-container>
   </v-content>
 </template>
 
 <script>
 import axios from "axios";
+import AddOrderSnackbar from "../components/AddOrderSnackbar.vue";
 let shoppingCart = require("../assets/shoppingcart.js");
 
 export default {
+  components: {
+    AddOrderSnackbar
+  },
   data: function() {
     return {
       isFetching: true,
@@ -69,6 +75,7 @@ export default {
   methods: {
     // Add product to cart
     addToCart: function(product) {
+      this.$emit('open_shopping_dialog', "test")
       shoppingCart.addItemToCart(product);
     }
   }

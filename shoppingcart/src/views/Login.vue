@@ -96,7 +96,7 @@ export default {
           password: self.form.password
         })
         .then(function(response) {
-          if(response.data.error) {
+          if (response.data.error) {
             // show a snackbar with the login error
             self.snackbar = true;
             self.text = `Error: ${response.data.code}, ${response.data.message}`;
@@ -109,7 +109,6 @@ export default {
             self.$store.commit("tokenInLocal");
             self.$router.push("/");
           }
-
         })
         // if server error, log error
         .catch(function(err) {

@@ -7,9 +7,14 @@
             <v-card-title>Order number: {{ order.order_id }}</v-card-title>
             <v-card-text>
               <v-divider></v-divider>
-              <v-list-item v-for="item in list[index]" :key="item.order_items_id">
+              <v-list-item
+                v-for="item in list[index]"
+                :key="item.order_items_id"
+              >
                 <v-list-item-content>
-                  <v-list-item-title> Product ID: {{item.product_id}} </v-list-item-title>
+                  <v-list-item-title>
+                    Product ID: {{ item.product_id }}
+                  </v-list-item-title>
                   <v-list-item-title>Count: 2</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -57,8 +62,10 @@ export default {
 
         // Filter and map the orders
         for (let item in self.orders) {
-          var filArray = self.child.filter(obj => obj.order_id == self.orders[item].order_id).map( obj => obj );
-          self.list.push(filArray)
+          var filArray = self.child
+            .filter(obj => obj.order_id == self.orders[item].order_id)
+            .map(obj => obj);
+          self.list.push(filArray);
         }
       })
       .catch(function(err) {
