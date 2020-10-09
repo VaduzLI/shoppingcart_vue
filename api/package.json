@@ -1,7 +1,7 @@
 {
-  "name": "cvdh-api",
+  "name": "shoppingcart",
   "version": "1.0.0",
-  "description": "",
+  "description": "school project",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js"
