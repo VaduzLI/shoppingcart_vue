@@ -49,6 +49,15 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-content>
 </template>
 
@@ -63,7 +72,9 @@ let shoppingCart = require('../assets/shoppingcart.js')
 export default {
   data: function(){
     return {
-      products: null
+      products: null,
+      snackbar: false,
+      text: `Added product to cart`,
     }
   },
 
@@ -77,7 +88,8 @@ export default {
   methods: {
     // Adds item to cart
     addToCart: function (product) {
-      shoppingCart.addItemToCart(product)
+      shoppingCart.addItemToCart(product);
+      this.snackbar = true;
     }
   }
 }

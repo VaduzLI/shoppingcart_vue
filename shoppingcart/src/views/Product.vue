@@ -39,24 +39,30 @@
           </v-card>
         </v-col>
       </v-row>
-      <AddOrderSnackbar />
     </v-container>
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-content>
 </template>
 
 <script>
 import axios from "axios";
-import AddOrderSnackbar from "../components/AddOrderSnackbar.vue";
 let shoppingCart = require("../assets/shoppingcart.js");
 
 export default {
-  components: {
-    AddOrderSnackbar
-  },
   data: function() {
     return {
       isFetching: true,
-      product: null
+      product: null,
+      snackbar: false,
+      text: `Added product to cart`
     };
   },
 
@@ -75,8 +81,8 @@ export default {
   methods: {
     // Add product to cart
     addToCart: function(product) {
-      this.$emit('open_shopping_dialog', "test")
       shoppingCart.addItemToCart(product);
+      this.snackbar = true;
     }
   }
 };

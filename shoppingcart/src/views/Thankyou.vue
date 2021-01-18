@@ -8,7 +8,6 @@
             <v-card-text>We are working on the order!</v-card-text>
             <v-card-actions>
               <v-btn href="/">Home</v-btn>
-              <v-btn v-if="token">My Orders</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>

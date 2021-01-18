@@ -6,9 +6,7 @@
 
     <v-dialog v-model="dialog" max-width="320">
       <v-card>
-        <v-card-title class="headline"
-          >Continue Shopping?</v-card-title
-        >
+        <v-card-title class="headline">Continue Shopping?</v-card-title>
 
         <v-card-text>
           Let Google help apps determine location. This means sending anonymous
@@ -40,16 +38,16 @@ export default {
   },
 
   mounted() {
-      this.$on('open_shopping_dialog', function(){
-          console.log("test")
-      })
+    this.$on("open_shopping_dialog", function() {
+      console.log("test");
+    });
   },
 
   methods: {
-      toCart: function() {
-          this.dialog = false;
-          this.$router.push("/cart");
-      }
+    toCart: function() {
+      this.dialog = false;
+      this.$router.push("/cart");
+    }
   }
 };
 </script>
